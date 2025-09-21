@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gain_quest/core/widgets/custom_button.dart';
-import 'package:gain_quest/core/widgets/custom_text_field.dart';
-import 'package:gain_quest/presentation/controllers/auth_controller.dart';
 import 'package:gain_quest/presentation/screens/auth/sign_up_page.dart';
 import 'package:get/get.dart';
+import 'package:gain_quest/presentation/controllers/auth_controller.dart';
 
+import 'package:gain_quest/core/widgets/custom_text_field.dart';
+import 'package:gain_quest/core/widgets/custom_button.dart';
+import 'package:gain_quest/core/utils/validators.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -75,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
         ),
         child: SafeArea(
           child: SingleChildScrollView(
-            padding:  EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: FadeTransition(
               opacity: _fadeAnimation,
               child: SlideTransition(
@@ -163,15 +162,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                               hintText: 'Enter your email',
                               keyboardType: TextInputType.emailAddress,
                               prefixIcon: Icons.email_outlined,
-                              validator: (value) {
-                                if (value?.isEmpty ?? true) {
-                                  return 'Email is required';
-                                }
-                                if (!GetUtils.isEmail(value!)) {
-                                  return 'Enter a valid email';
-                                }
-                                return null;
-                              },
+                              validator: Validators.validateEmail,
                             ),
                             SizedBox(height: 16),
                             
@@ -181,15 +172,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                               hintText: 'Enter your password',
                               obscureText: true,
                               prefixIcon: Icons.lock_outline,
-                              validator: (value) {
-                                if (value?.isEmpty ?? true) {
-                                  return 'Password is required';
-                                }
-                                if (value!.length < 6) {
-                                  return 'Password must be at least 6 characters';
-                                }
-                                return null;
-                              },
+                              validator: Validators.validatePassword,
                             ),
                             
                             SizedBox(height: 8),

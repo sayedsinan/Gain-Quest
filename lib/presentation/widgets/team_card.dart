@@ -132,11 +132,7 @@ class TeamCard extends StatelessWidget {
                       'Followers',
                     ),
                     SizedBox(width: 16),
-                    _buildStatItem(
-                      Icons.emoji_events_outlined,
-                      '${team.winRate.toStringAsFixed(1)}%',
-                      'Win Rate',
-                    ),
+                    
                   ],
                 ),
               ],

@@ -13,7 +13,7 @@ class LiveController extends GetxController {
     super.onInit();
     loadLiveStreams();
     
-    // Listen to live streams
+  
     _firebaseService.getLiveStreamsStream().listen((streams) {
       liveStreams.assignAll(streams);
     });
@@ -24,7 +24,6 @@ class LiveController extends GetxController {
       isLoading.value = true;
       errorMessage.value = '';
       
-      // For demo purposes, create sample live streams
       await _createSampleLiveStreams();
       
     } catch (e) {
@@ -39,7 +38,7 @@ class LiveController extends GetxController {
   }
 
   Future<void> _createSampleLiveStreams() async {
-    // Create sample live streams for demo
+
     List<Map<String, dynamic>> sampleStreams = [
       {
         'id': 'stream1',
@@ -79,8 +78,7 @@ class LiveController extends GetxController {
       },
     ];
 
-    // For demo purposes, just update the observable list
-    // In a real app, you would save these to Firestore
+    
     liveStreams.assignAll(sampleStreams);
   }
 

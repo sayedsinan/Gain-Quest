@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gain_quest/core/widgets/custom_button.dart';
 import 'package:gain_quest/data/models/challenge_model.dart';
 import 'package:get/get.dart';
+
+import 'package:gain_quest/core/widgets/custom_button.dart';
+import 'package:gain_quest/core/utils/formatters.dart';
 
 import 'package:intl/intl.dart';
 
@@ -10,10 +12,10 @@ class ChallengeCard extends StatelessWidget {
   final Function(String challengeId, String teamId, int credits, String prediction) onBetPressed;
 
   const ChallengeCard({
-    super.key,
+    Key? key,
     required this.challenge,
     required this.onBetPressed,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +83,12 @@ class ChallengeCard extends StatelessWidget {
                 children: [
                   _buildStatItem(
                     Icons.people_outline,
-                    '${challenge.totalBets} bets',
+                    '${Formatters.formatLargeNumber(challenge.totalBets)} bets',
                   ),
                   SizedBox(width: 16),
                   _buildStatItem(
                     Icons.account_balance_wallet_outlined,
-                    '${challenge.totalCreditsStaked} staked',
+                    '${Formatters.formatCredits(challenge.totalCreditsStaked)} staked',
                   ),
                   Spacer(),
                   if (challenge.isActive)
@@ -172,17 +174,7 @@ class ChallengeCard extends StatelessWidget {
 
   Widget _buildTimeRemaining() {
     Duration timeLeft = challenge.timeRemaining;
-    String timeText;
-    
-    if (timeLeft.inDays > 0) {
-      timeText = '${timeLeft.inDays}d ${timeLeft.inHours % 24}h';
-    } else if (timeLeft.inHours > 0) {
-      timeText = '${timeLeft.inHours}h ${timeLeft.inMinutes % 60}m';
-    } else if (timeLeft.inMinutes > 0) {
-      timeText = '${timeLeft.inMinutes}m';
-    } else {
-      timeText = 'Ending soon';
-    }
+    String timeText = Formatters.formatDuration(timeLeft);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),

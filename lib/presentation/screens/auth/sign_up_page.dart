@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:gain_quest/presentation/controllers/auth_controller.dart';
 import 'package:gain_quest/core/widgets/custom_text_field.dart';
 import 'package:gain_quest/core/widgets/custom_button.dart';
+import 'package:gain_quest/core/utils/validators.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -147,15 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
                               label: 'Full Name',
                               hintText: 'Enter your full name',
                               prefixIcon: Icons.person_outline,
-                              validator: (value) {
-                                if (value?.isEmpty ?? true) {
-                                  return 'Name is required';
-                                }
-                                if (value!.length < 2) {
-                                  return 'Name must be at least 2 characters';
-                                }
-                                return null;
-                              },
+                              validator: Validators.validateName,
                             ),
                             SizedBox(height: 16),
                             
@@ -165,15 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
                               hintText: 'Enter your email',
                               keyboardType: TextInputType.emailAddress,
                               prefixIcon: Icons.email_outlined,
-                              validator: (value) {
-                                if (value?.isEmpty ?? true) {
-                                  return 'Email is required';
-                                }
-                                if (!GetUtils.isEmail(value!)) {
-                                  return 'Enter a valid email';
-                                }
-                                return null;
-                              },
+                              validator: Validators.validateEmail,
                             ),
                             SizedBox(height: 16),
                             
@@ -183,15 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
                               hintText: 'Enter your password',
                               obscureText: true,
                               prefixIcon: Icons.lock_outline,
-                              validator: (value) {
-                                if (value?.isEmpty ?? true) {
-                                  return 'Password is required';
-                                }
-                                if (value!.length < 6) {
-                                  return 'Password must be at least 6 characters';
-                                }
-                                return null;
-                              },
+                              validator: Validators.validatePassword,
                             ),
                             SizedBox(height: 16),
                             
@@ -201,15 +178,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
                               hintText: 'Confirm your password',
                               obscureText: true,
                               prefixIcon: Icons.lock_outline,
-                              validator: (value) {
-                                if (value?.isEmpty ?? true) {
-                                  return 'Please confirm your password';
-                                }
-                                if (value != _passwordController.text) {
-                                  return 'Passwords do not match';
-                                }
-                                return null;
-                              },
+                              validator: (value) => Validators.validateConfirmPassword(value, _passwordController.text),
                             ),
                             
                             SizedBox(height: 24),

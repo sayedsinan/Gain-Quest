@@ -60,4 +60,33 @@ class TeamModel {
       'isLive': isLive,
     };
   }
+TeamModel copyWith({
+  String? id,
+  String? name,
+  String? description,
+  String? logoUrl,
+  String? category,
+  List<String>? members,
+  int? followersCount,
+  double? winRate,
+  int? totalChallenges,
+  int? challengesWon,
+  DateTime? createdAt,
+  bool? isLive,
+}) {
+  return TeamModel(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    description: description ?? this.description,
+    logoUrl: logoUrl ?? this.logoUrl,
+    category: category ?? this.category,
+    members: members ?? this.members,
+    followersCount: followersCount ?? this.followersCount,
+    winRate: winRate ?? this.winRate,
+    totalChallenges: totalChallenges ?? this.totalChallenges,
+    challengesWon: challengesWon ?? this.challengesWon,
+    createdAt: createdAt ?? this.createdAt,
+    isLive: isLive ?? this.isLive,
+  );
+}
 }

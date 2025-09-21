@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:gain_quest/data/models/bet_model.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
+
+import 'package:gain_quest/core/utils/formatters.dart';
 
 class BetCard extends StatelessWidget {
   final BetModel bet;
 
   const BetCard({
-    super.key,
+    Key? key,
     required this.bet,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +46,21 @@ class BetCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Bet on ${bet.prediction.toUpperCase()}',
+                    'Bet on ${Formatters.capitalize(bet.prediction)}',
                     style: Get.theme.textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   SizedBox(height: 4),
                   Text(
-                    'Staked: ${bet.creditsStaked} credits',
+                    'Staked: ${Formatters.formatCredits(bet.creditsStaked)} credits',
                     style: Get.theme.textTheme.bodySmall?.copyWith(
                       color: Get.theme.colorScheme.onSurface.withOpacity(0.6),
                     ),
                   ),
                   SizedBox(height: 2),
                   Text(
-                    DateFormat.MMMd().add_jm().format(bet.createdAt),
+                    Formatters.formatDateTime(bet.createdAt),
                     style: Get.theme.textTheme.bodySmall?.copyWith(
                       color: Get.theme.colorScheme.onSurface.withOpacity(0.5),
                     ),
@@ -81,8 +82,8 @@ class BetCard extends StatelessWidget {
                       color: _getStatusColor().withOpacity(0.3),
                     ),
                   ),
-                  child: Text(
-                    _getStatusText(),
+                  child:                   Text(
+                    Formatters.formatBetStatus(bet.status),
                     style: TextStyle(
                       color: _getStatusColor(),
                       fontSize: 12,
@@ -94,7 +95,7 @@ class BetCard extends StatelessWidget {
                 if (bet.creditsWon != null && bet.creditsWon! > 0) ...[
                   SizedBox(height: 4),
                   Text(
-                    '+${bet.creditsWon} credits',
+                    '+${Formatters.formatCredits(bet.creditsWon!)} credits',
                     style: Get.theme.textTheme.bodyMedium?.copyWith(
                       color: Get.theme.colorScheme.secondary,
                       fontWeight: FontWeight.bold,
@@ -135,16 +136,5 @@ class BetCard extends StatelessWidget {
     }
   }
 
-  String _getStatusText() {
-    switch (bet.status) {
-      case 'pending':
-        return 'PENDING';
-      case 'won':
-        return 'WON';
-      case 'lost':
-        return 'NO WIN';
-      default:
-        return 'UNKNOWN';
-    }
-  }
+ 
 }
